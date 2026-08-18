@@ -1,10 +1,25 @@
 {
   "rewrites": [
-    { "source": "/api/r/:name", "destination": "/api/r/index?name=:name" },
-    { "source": "/(.*)", "destination": "/frontend/dist/index.html" }
+    {
+      "source": "/api/r/:name",
+      "destination": "/api/index?name=:name"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/frontend/dist/$1"
+    }
   ],
   "builds": [
-    { "src": "api/**/*.js", "use": "@vercel/node" },
-    { "src": "frontend/**", "use": "@vercel/static-build" }
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
   ]
 }
